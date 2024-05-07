@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table,
+        tr,
+        td {
+            border-collapse: collapse;
+            border: 1px solid black;
+            padding: 0px;
+            margin: 0px;
+        }
+
+        td {
+            background-size: contain;
+            height: 100px;
+            width: 100px;
+            padding: 0px;
+            margin: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        const CRUZ = 'url(https://simpleicon.com/wp-content/uploads/cross-256x256.png)'
+        const CIRCULO = 'url(https://simpleicon.com/wp-content/uploads/cd1.png)'
+
+        const tabla = document.createElement('table')
+        for (x = 1; x <= 3; x++) {
+            const fila = document.createElement('tr')
+            for (y = 1; y <= 3; y++) {
+                const casilla = document.createElement('td')
+                casilla.id = `${x}${y}`
+                casilla.addEventListener('click', () => {
+                    casilla.style.backgroundImage = CRUZ
+                })
+
+                casilla.addEventListener('dblclick', () => {
+                    casilla.style.backgroundImage = CIRCULO
+                })
+
+                fila.appendChild(casilla)
+            }
+            tabla.appendChild(fila)
+        }
+
+        document.body.appendChild(tabla)
+    </script>
+</body>
+
+</html>

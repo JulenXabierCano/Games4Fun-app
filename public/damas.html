@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table,
+        tr,
+        td {
+            border-collapse: collapse;
+            border: 1px solid black;
+            padding: 0px;
+        }
+
+        td {
+            height: 100px;
+            width: 100px;
+            margin: 0px;
+        }
+
+        img {
+            height: 100px;
+            width: 100px;
+            margin: 0px;
+        }
+
+        .ficha {
+            transition: .3s linear;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+
+    <script>
+        function formula(origen, destino) { return parseInt(origen) + (destino - parseInt(origen)) / 2 }
+        function diagonal(num, destino) { return destino == parseInt(origen) + num }
+
+        const FICHA_NEGRA = 'https://cdn-0.emojis.wiki/emoji-pics/google/black-circle-google.png'
+
+        const FICHA_BLANCA = 'https://cdn-0.emojis.wiki/emoji-pics/google/white-circle-google.png'
+
+        var origen
+
+        const table = document.createElement('table')
+
+        for (x = 1; x <= 8; x++) {
+            const fila = document.createElement('tr')
+            for (y = 1; y <= 8; y++) {
+                const casilla = document.createElement('td')
+                casilla.id = `${x}${y}`
+                casilla.class = 'casilla'
+
+                $(casilla).attr('droppable', true)
+
+                $(casilla).on('dragover', (event) => { event.preventDefault(); });
+
+                $(casilla).on('drop', function (event) {
+                    event.preventDefault();
+                    let casilla = event.target
+
+                    if (normasDamas(event.target.id)) {
+                        let ficha = document.getElementById(`f${origen}`)
+                        let clon = ficha.cloneNode(true)
+                        $(clon).attr('id', `f${event.target.id}`)
+                        event.target.appendChild(clon)
+                        $(`#${origen}`).empty()
+                        añadir_atributos()
+                    }
+                });
+
+                // Comprobar que tiene que haber ficha o no
+                switch (true) {
+                    case (x == 2 && y % 2 != 0) || (x == 1 && y % 2 == 0):
+                        nFicha = new Image()
+                        nFicha.src = FICHA_NEGRA
+                        $(nFicha).attr('id', `f${x}${y}`)
+                        $(nFicha).attr('class', `ficha`)
+                        casilla.appendChild(nFicha)
+                        break
+
+                    case (x == 7 && y % 2 == 0) || (x == 8 && y % 2 != 0):
+                        nFicha = new Image()
+                        nFicha.src = FICHA_BLANCA
+                        $(nFicha).attr('id', `f${x}${y}`)
+                        $(nFicha).attr('class', `ficha`)
+                        casilla.appendChild(nFicha)
+                        break
+                }
+
+                fila.appendChild(casilla)
+            }
+            table.appendChild(fila)
+        }
+
+        document.body.appendChild(table)
+
+        // Código para que las fichas sean dragables con jquery
+        function añadir_atributos() {
+            $('.ficha').attr('draggable', true);
+
+            $('.ficha').on('dragstart', function (event) {
+                origen = event.target.id.replace('f', '')
+            });
+        }
+
+        function normasDamas(destino) {
+            /**
+             * Normas a cumplir:
+             *  1 - Las damas deben ir hacia adelante en diagonal solo un paso
+             *  2 - Si comen, deben ser dos pasos en diagonal (2.1) y la casilla de en medio debe ser del color opuesto (2.2)
+             *  3 - Si es reina, puede ir hacia cualquier lado los pasos que quiera
+             */
+
+            if (
+                (
+                    // Norma 1:
+                    (
+                        (
+                            diagonal(11, destino) ||
+                            diagonal(9, destino)
+                        ) && $(`#f${origen}`).attr("src") == FICHA_NEGRA
+                    ) || (
+                        (
+                            diagonal(-11, destino) ||
+                            diagonal(-9, destino)
+                        ) && $(`#f${origen}`).attr("src") == FICHA_BLANCA
+                    )
+                )
+            )
+                return true
+
+            else if (
+                ( // Norma 2
+                    (
+                        diagonal(22, destino) ||
+                        diagonal(18, destino)
+                    ) && $(`#f${origen}`).attr("src") == FICHA_NEGRA &&
+                    $(`#f${formula(origen, destino)}`).attr("src") == FICHA_BLANCA
+                ) || (
+                    (
+                        diagonal(-22, destino) ||
+                        diagonal(-18, destino)
+                    ) && $(`#f${origen}`).attr("src") == FICHA_BLANCA &&
+                    $(`#f${formula(origen, destino)}`).attr("src") == FICHA_NEGRA
+                )
+            ) {
+                $(`#${formula(origen, destino)}`).text('')
+                return true
+            }
+
+            return false
+        }
+
+        añadir_atributos()
+    </script>
+</body>
+
+</html>

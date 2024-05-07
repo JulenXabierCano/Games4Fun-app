@@ -1,0 +1,174 @@
+:root {
+    --color-texto: #717171;
+    --texto-no-func: #676767;
+    --fondo-texto: #404040;
+    --fondo: #191919;
+}
+
+body {
+    background-color: var(--fondo);
+    text-align: center;
+}
+
+body * {
+    font-family: Arial, Helvetica, sans-serif;
+    vertical-align: top;
+}
+
+#titulo {
+    text-shadow: 5px -5px var(--fondo-texto);
+    color: var(--color-texto);
+    animation: titulo 1s infinite;
+    margin-bottom: 0px;
+    font-size: 100px;
+}
+
+@keyframes titulo {
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+#subtitulo {
+    color: var(--color-texto);
+}
+
+#err {
+    width: 300px;
+    padding: 5px;
+    margin: auto;
+    color: red;
+}
+
+@keyframes error {
+    50% {
+        background-color: yellow;
+    }
+}
+
+#carga {
+    background-color: var(--color-texto);
+    border-radius: 10px;
+    height: 15px;
+    width: 15px;
+}
+
+@keyframes carga {
+    25%{
+        width: 30px;
+    }
+
+    50% {
+        transform: translateX(285px);
+        width: 15px;
+    }
+
+    75% {
+        width: 30px;
+    }
+}
+
+#labelUsuario {
+    color: var(--color-texto);
+}
+
+#sala {
+    background-color: var(--color-texto);
+    border-color: var(--color-texto);
+    color: var(--fondo);
+    text-align: center;
+}
+
+.boton {
+    background-color: var(--color-texto);
+    border-color: var(--color-texto);
+    color: var(--fondo);
+    transition: linear .2s;
+    font-weight: bolder;
+    padding: 5px;
+    margin: 5px;
+}
+
+.texto {
+    background-color: var(--color-texto);
+    border-color: var(--color-texto);
+    color: var(--fondo);
+    font-weight: bolder;
+    text-align: center;
+}
+
+.boton_dos {
+    border-color: var(--fondo-texto);
+    background-color: var(--fondo);
+    color: var(--color-texto);
+    transition: linear .2s;
+    font-weight: bolder;
+    margin-top: 5px;
+    height: 41px;
+}
+
+.texto_dos {
+    border-color: var(--fondo-texto);
+    background-color: var(--fondo);
+    color: var(--color-texto);
+    font-weight: bolder;
+    text-align: center;
+    margin-top: 5px;
+    height: 35px;
+}
+
+.boton:hover {
+    transform: translateY(-5px);
+}
+
+/* Estilos para las pantallas de los juegos */
+
+#menu {
+    margin-bottom: 15px;
+}
+
+#juego {
+    text-shadow: 5px -5px var(--fondo-texto);
+    color: var(--color-texto);
+    display: inline-block;
+    font-size: 100px;
+    margin: 0px;
+}
+
+#cerrarSala {
+    position: absolute;
+    right: 25px;
+}
+
+#chat {
+    background-color: var(--color-texto);
+    display: inline-block;
+    color: var(--fondo);
+    height: 700px;
+    width: 300px;
+    margin: 15px;
+}
+
+#text {
+    border: 2px solid black;
+    height: 500px;
+    margin: auto;
+    width: 95%;
+}
+
+#tablero {
+    background-color: var(--color-texto);
+    display: inline-block;
+    height: 700px;
+    margin: 15px;
+    width: 700px;
+}
+
+#info {
+    background-color: var(--color-texto);
+    display: inline-block;
+    color: var(--fondo);
+    text-align: center;
+    margin: 15px;
+    width: 300px;
+}
